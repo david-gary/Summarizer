@@ -37,6 +37,12 @@ If you would like to clear out all dataset subdirectories, run the following com
 
 ## Sentiment Analysis Interface
 
-## Sentiment Analysis CLI
+The core part of this first deliverable is the streamlit frontend for sentiment analysis. To start the frontend, run the following command:
 
-## Unit Tests
+```bash
+streamlit run streamlitUI.py
+```
+
+This will display an address in the terminal which can be followed to the frontend display in the browser. The menu on the left allows the user to select the source of the text they would like to analyze (`Custom Text`, `Multi-News`, `Reddit`, or `S2ORC`). Note that if the user selects a datasource that has not been loaded yet, a series of errors will display in the text box at the center of the screen.
+
+Once the user has correctly selected or provided a text source, they simply click the `Analyze` button to see the sentiment analysis results. The results will display below the text box at the center of the screen.
