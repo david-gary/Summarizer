@@ -19,7 +19,7 @@ As additional training data for XLNet, three datasets have been provided and can
 Dataset arguments:
 
 - `reddit`: Reddit TIFU dataset
-- `multi-news`: Multi-News dataset
+- `multinews`: Multi-News dataset
 - `s2orc`: S2ORC dataset **WARNING:** this dataset is very large (516GiB) and will take a long time to download
 - `all`: Downloads all three datasets
 
