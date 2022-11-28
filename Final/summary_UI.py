@@ -6,6 +6,7 @@ import streamlit as st
 
 
 def main():
+
     st.title("Summarization Tool")
 
     # dropdown side menu for selecting dataset or custom text
@@ -42,12 +43,14 @@ def main():
     # - pegasus
     # - pegasusx
     model = st.sidebar.selectbox(
-        "Model Settings", ["T5", "XLNet", "BART", "Pegasus", "PegasusX"])
+        "Model Settings", ["T5", "XLNet", "BART", "BARTX", "Pegasus", "PegasusX"])
 
     if model == "XLNet":
         model_type = "xlnet"
     elif model == "BART":
         model_type = "bart"
+    elif model == "BARTX":
+        model_type = "bartx"
     elif model == "T5":
         model_type = "t5"
     elif model == "Pegasus":

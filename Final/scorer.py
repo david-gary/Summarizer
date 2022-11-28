@@ -44,6 +44,7 @@ class ScoringSuite:
             'rouge2 recall': score_output['rouge2'].recall,
             'rougeL fmeasure': score_output['rougeL'].fmeasure,
             'rougeL precision': score_output['rougeL'].precision,
+            'rougeL recall': score_output['rougeL'].recall
         }
         return score_dict
 

@@ -30,6 +30,8 @@ class SummarizationSuite:
             self.model_name = 'xlnet-base-cased'
         elif self.model_type == 'bart':
             self.model_name = 'facebook/bart-large-cnn'
+        elif self.model_type == 'bartx':
+            self.model_name = 'facebook/bart-large-xsum'
         elif self.model_type == 't5':
             self.model_name = 't5-base'
         elif self.model_type == 'pegasus':
@@ -56,6 +58,9 @@ class SummarizationSuite:
         elif self.model_type == 'bart':
             self.description = open(
                 'models/descriptions/bart.txt', 'r').read()
+        elif self.model_type == 'bartx':
+            self.description = open(
+                'models/descriptions/bartx.txt', 'r').read()
         elif self.model_type == 't5':
             self.description = open(
                 'models/descriptions/t5.txt', 'r').read()
@@ -77,6 +82,7 @@ class SummarizationSuite:
         Builds the model for summarization from the following:
         - xlnet (custom made)
         - bart
+        - bartx
         - t5
         - pegasus
         - pegasusx

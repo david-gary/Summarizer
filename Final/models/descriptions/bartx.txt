@@ -1,0 +1,1 @@
+The Bart-Xsum model is the same thing as the Bart model, but it has been pretrained on the Xsum dataset.
