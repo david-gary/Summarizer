@@ -41,7 +41,7 @@ def main():
     # - pegasus
     # - pegasusx
     model = st.sidebar.selectbox(
-        "Select Summarization Model", ["T5", "XLNet", "BART", "Pegasus", "PegasusX"])
+        "Model Settings", ["T5", "XLNet", "BART", "Pegasus", "PegasusX"])
 
     if model == "XLNet":
         model_type = "xlnet"
@@ -55,7 +55,6 @@ def main():
         model_type = "pegasusx"
 
     # third dropdown side menu to allow the user to set min and max length of the summary
-    st.sidebar.title("Set Summary Length")
     summary_length = st.sidebar.slider(
         "Set Summary Length", 10, 1000, (10, 100))
     min_length = summary_length[0]
@@ -69,6 +68,9 @@ def main():
         summarizer.build_text_records()
         summarizer.build_model()
         summarizer.build_tokenizer()
+
+        # sidebar text box for displaying the model description
+        st.sidebar.text_area("Model Description", summarizer.description)
 
         # Add a heading for the input text details
         st.header("Input Text Details")
