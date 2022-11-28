@@ -1,4 +1,4 @@
-# Text Analyzer: Deliverable 1
+# Text Analyzer
 
 ## Project Description
 
