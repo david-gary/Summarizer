@@ -36,10 +36,16 @@ class ScoringSuite:
         score_output = scorer.score(text, summary)
 
         score_dict = {
-            'rouge1': score_output['rouge1'].fmeasure,
-            'rouge2': score_output['rouge2'].fmeasure,
-            'rougeL': score_output['rougeL'].fmeasure
+            'rouge1 fmeasure': score_output['rouge1'].fmeasure,
+            'rouge1 precision': score_output['rouge1'].precision,
+            'rouge1 recall': score_output['rouge1'].recall,
+            'rouge2 fmeasure': score_output['rouge2'].fmeasure,
+            'rouge2 precision': score_output['rouge2'].precision,
+            'rouge2 recall': score_output['rouge2'].recall,
+            'rougeL fmeasure': score_output['rougeL'].fmeasure,
+            'rougeL precision': score_output['rougeL'].precision,
         }
+        return score_dict
 
     def bleu_score(self, text, summary):
         """
@@ -144,13 +150,9 @@ class ScoringSuite:
         cosine = cosine_similarity(text_vector, summary_vector).mean() if len(
             summary) > 0 else 0
 
-        return {'cosine': cosine_similarity}
+        return {'cosine': cosine}
 
     def full_score_report(self):
-
-        # create an empty dataframe of the scores
-        full_scores = pd.DataFrame(columns=[
-                                   'rouge1', 'rouge2', 'rougeL', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine'])
 
         rouge_score = self.rouge_score(self.text, self.summary)
         bleu_score = self.bleu_score(self.text, self.summary)
@@ -158,10 +160,7 @@ class ScoringSuite:
         perplexity_score = self.perplexity_score(self.text, self.summary)
         cosine_score = self.cosine_score(self.text, self.summary)
 
-        full_scores = full_scores.append(rouge_score, ignore_index=True)
-        full_scores = full_scores.append(bleu_score, ignore_index=True)
-        full_scores = full_scores.append(jaccard_score, ignore_index=True)
-        full_scores = full_scores.append(perplexity_score, ignore_index=True)
-        full_scores = full_scores.append(cosine_score, ignore_index=True)
+        score_dict = {"Rouge Score": rouge_score, "Bleu Score": bleu_score,
+                      "Jaccard Score": jaccard_score, "Perplexity Score": perplexity_score, "Cosine Score": cosine_score}
 
-        return full_scores
+        return score_dict

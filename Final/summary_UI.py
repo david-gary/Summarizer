@@ -1,6 +1,7 @@
 from utils import grab_random_xsum, grab_random_cnndm, grab_random_gigaword,\
     grab_random_reddit, grab_random_s2orc, grab_random_multinews
 from analyzer import SummarizationSuite
+from scorer import ScoringSuite
 import streamlit as st
 
 
@@ -88,8 +89,9 @@ def main():
         st.write(f" Summary: {summary}")
 
         # full score report
-        # st.write("Score Report")
-        # st.write(summarizer.full_score_report(text, summary))
+        st.header("Score Report")
+        scoring_suite = ScoringSuite(text, summary)
+        st.write(scoring_suite.full_score_report())
 
 
 if __name__ == "__main__":
