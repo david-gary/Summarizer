@@ -64,6 +64,66 @@ def grab_random_s2orc(n=1):
     return texts
 
 
+def grab_random_xsum(n=1):
+
+    # join path to testing folder (cwd + datasets/xsum + testing)
+    path = os.path.join(os.getcwd(), "datasets", "xsum", "testing")
+    if len(os.listdir(path)) == 0:
+        print("XSum documents folder is empty. Please run 'datasets_loader.py --dataset xsum' to load the dataset.")
+        sys.exit()
+    else:
+        # grab n random files from testing folder
+        files = random.sample(os.listdir(path), n)
+
+        # open each file and save the text to a list
+        texts = []
+        for file in files:
+            with open(os.path.join(path, file), "r") as f:
+                texts.append(f.read())
+
+    return texts
+
+
+def grab_random_cnndm(n=1):
+
+    # join path to testing folder (cwd + datasets/cnndm + testing)
+    path = os.path.join(os.getcwd(), "datasets", "cnndm", "testing")
+    if len(os.listdir(path)) == 0:
+        print("CNN/DailyMail documents folder is empty. Please run 'datasets_loader.py --dataset cnn_dailymail' to load the dataset.")
+        sys.exit()
+    else:
+        # grab n random files from testing folder
+        files = random.sample(os.listdir(path), n)
+
+        # open each file and save the text to a list
+        texts = []
+        for file in files:
+            with open(os.path.join(path, file), "r") as f:
+                texts.append(f.read())
+
+    return texts
+
+
+def grab_random_gigaword(n=1):
+
+    # join path to testing folder (cwd + datasets + gigaword)
+    path = os.path.join(os.getcwd(), "datasets", "gigaword", "testing")
+    if len(os.listdir(path)) == 0:
+        print("Gigaword folder is empty. Please run 'datasets_loader.py --dataset gigaword' to load the dataset.")
+        sys.exit()
+    else:
+        # grab n random files from testing folder
+        files = random.sample(os.listdir(path), n)
+
+        # open each file and save the text to a list
+        texts = []
+        for file in files:
+            with open(os.path.join(path, file), "r") as f:
+                texts.append(f.read())
+
+    return texts
+
+
 def test_all_grabs():
     print("Grabbing random Multi-News...")
     print(grab_random_multinews())

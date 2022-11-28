@@ -1,0 +1,1 @@
+Bart is a model that uses bidirectional encoding and left-to-right decoding.

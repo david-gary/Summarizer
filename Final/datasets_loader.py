@@ -68,6 +68,69 @@ def load_s2orc():
             f.write(dataset['test'][i]['text'])
 
 
+def load_xsum():
+    dataset = load_dataset('xsum')
+
+    # for each document in dataset['train'], write it to a file
+    print(f"Loading {len(dataset['train'])} files from the train set")
+    for i in tqdm(range(len(dataset['train']))):
+        with open(f"datasets/xsum/training/traindoc{i}.txt", "w") as f:
+            f.write(dataset['train'][i]['document'])
+
+    print(
+        f"Loading {len(dataset['validation'])} files from the validation set")
+    for i in tqdm(range(len(dataset['validation']))):
+        with open(f"datasets/xsum/validation/valdoc{i}.txt", "w") as f:
+            f.write(dataset['validation'][i]['document'])
+
+    print(f"Loading {len(dataset['test'])} files from the test set")
+    for i in tqdm(range(len(dataset['test']))):
+        with open(f"datasets/xsum/testing/testdoc{i}.txt", "w") as f:
+            f.write(dataset['test'][i]['document'])
+
+
+def load_cnn_dailymail():
+    dataset = load_dataset('cnn_dailymail', '3.0.0')
+
+    # for each document in dataset['train'], write it to a file
+    print(f"Loading {len(dataset['train'])} files from the train set")
+    for i in tqdm(range(len(dataset['train']))):
+        with open(f"datasets/cnndm/training/traindoc{i}.txt", "w") as f:
+            f.write(dataset['train'][i]['article'])
+
+    print(
+        f"Loading {len(dataset['validation'])} files from the validation set")
+    for i in tqdm(range(len(dataset['validation']))):
+        with open(f"datasets/cnndm/validation/valdoc{i}.txt", "w") as f:
+            f.write(dataset['validation'][i]['article'])
+
+    print(f"Loading {len(dataset['test'])} files from the test set")
+    for i in tqdm(range(len(dataset['test']))):
+        with open(f"datasets/cnndm/testing/testdoc{i}.txt", "w") as f:
+            f.write(dataset['test'][i]['article'])
+
+
+def load_gigaword():
+    dataset = load_dataset('gigaword')
+
+    # for each document in dataset['train'], write it to a file
+    print(f"Loading {len(dataset['train'])} files from the train set")
+    for i in tqdm(range(len(dataset['train']))):
+        with open(f"datasets/gigaword/training/traindoc{i}.txt", "w") as f:
+            f.write(dataset['train'][i]['document'])
+
+    print(
+        f"Loading {len(dataset['validation'])} files from the validation set")
+    for i in tqdm(range(len(dataset['validation']))):
+        with open(f"datasets/gigaword/validation/valdoc{i}.txt", "w") as f:
+            f.write(dataset['validation'][i]['document'])
+
+    print(f"Loading {len(dataset['test'])} files from the test set")
+    for i in tqdm(range(len(dataset['test']))):
+        with open(f"datasets/gigaword/testing/testdoc{i}.txt", "w") as f:
+            f.write(dataset['test'][i]['document'])
+
+
 def main():
     # get keyword arguments from command line
     parser = argparse.ArgumentParser()
@@ -80,12 +143,19 @@ def main():
         load_reddit_tifu()
     elif args.dataset == 's2orc':
         load_s2orc()
+    elif args.dataset == 'xsum':
+        load_xsum()
+    elif args.dataset == 'cnndm':
+        load_cnn_dailymail()
+    elif args.dataset == 'gigaword':
+        load_gigaword()
+
     elif args.dataset == 'all':
         load_multi_news()
         load_reddit_tifu()
         load_s2orc()
     else:
-        print("Invalid dataset name. Please choose from multinews, reddit, s2orc, or all.\ne.g. python datasets_loader.py --dataset multinews")
+        print("Invalid dataset name. Please choose from\n- multinews\n- reddit, s2orc\n- \n- xsum\n- cnndm\n- gigaword\ne.g. python3 datasets_loader.py --dataset multinews")
 
 
 if __name__ == '__main__':

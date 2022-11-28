@@ -1,0 +1,1 @@
+T5 is another encoder-decoder model that uses relative scalar embeddings.

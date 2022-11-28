@@ -1,0 +1,1 @@
+The PegasusX model is based on the Pegasus model, but it extends the input sequence allotment to 16k tokens. This is useful for long documents, such as news articles, and for long queries, such as those found in search engines.

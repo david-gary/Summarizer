@@ -1,0 +1,2 @@
+The Pegasus model uses a transformer-baseed encoder-decoder method that masks and removes important sentences.
+It is good for low-resource and shorter input sequence summarization tasks.

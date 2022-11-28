@@ -1,0 +1,119 @@
+\setlength{\headheight}{15pt}
+\lhead{\textbf{ITCS-6150}}
+\chead{\textbf{Group 7}}
+\rhead{\textbf{Proposal}}
+
+\vspace{-2pt}
+
+\begin{center}
+    \begin{Large}
+        \noindent\textbf{Transformer-based Text Summarization:\\Scoring and Limitations}
+    \end{Large}
+\end{center}
+
+\vspace{-10pt}
+
+% Two column display for Team Members and Models & Datasets
+\begin{multicols}{2}
+
+    \begin{center}
+        \begin{large}
+            \noindent\textbf{Team Members}
+        \end{large}
+    \end{center}
+    % Table of group members and their ids
+    % Correct column widths for a table
+    % 2 columns, 2 rows, no header
+    \begin{center}
+        \begin{tabular}{|lc|}
+            \hline
+            \textbf{David Gary} & 801325583 \\ \hline
+            \textbf{Michael Smalenberger} & 800984973 \\ \hline
+            \textbf{Matthew Seman} & 801156143 \\ \hline
+            \textbf{Ryan Marsh} & 800552800 \\ \hline
+        \end{tabular}
+    \end{center}
+
+    \begin{center}
+        \begin{large}
+            \noindent\textbf{Models \& Datasets}
+        \end{large}
+    \end{center}
+
+    \begin{center}
+        \begin{tabular}{|c|}
+            \hline
+            \href{https://github.com/zihangdai/xlnet}{XLNet Model} \\ \hline
+            \href{https://paperswithcode.com/dataset/reddit-tifu}{Reddit TIFU Dataset} \\ \hline
+            \href{https://paperswithcode.com/dataset/multi-news}{Multi-News Dataset} \\ \hline
+            \href{https://paperswithcode.com/dataset/s2orc}{S2ORC Dataset} \\ \hline
+        \end{tabular}
+    \end{center}
+
+\end{multicols}
+
+\begin{large}
+    \noindent\textbf{Introduction}
+\end{large}
+
+\vspace{5pt}
+
+Transformers allow us to vectorize text and analyze the relationships between words and sentences.
+This technique allows for more powerful and larger language models to be created.
+Accuracy assessments through expert review are often unavailable for highly-contextual text summarization, so standardized evaluation schemes like Pyramid or ROUGE are used.
+A growing body of literature focuses on assessing these metrics' efficacy and limitations.
+Our goal is to review the literature and summarize the findings of these studies.
+In addition, we aim to apply the XLNet transformer model to various datasets from distinct contexts and thoroughly review the cost and limitations of generalizable text summarization.
+
+\vspace{2pt}
+
+Our proposed deliverables and the subsequent system will perform text analysis and summarization, following the current standards of generalizability.
+Anyone can use this system to summarize or assess the tone of text input.
+Since the point here is to show the limitations of generalized text summarization models, perfect accuracy is not the goal of our system.
+Users should beware of this and, as a result, only utilize this tool for interpretation guidance.
+
+\vspace{5pt}
+
+\begin{large}
+    \noindent\textbf{Deliverable 1: Length-Agnostic Sentiment Analysis}
+\end{large}
+
+Our first deliverable will have a foundational ability to assess the general sentiment of an input text.
+We will utilize the XLNet transformer model as a backbone and employ some of the length-agnostic methods shown in the Guan, Smetannikov, and Tianxing paper\cite{Transformers}. 
+
+\vspace{1pt}
+
+\noindent\textbf{Use Cases:}
+
+\vspace{0pt}
+
+% enumerate with small text and small spacing
+% text size should be smaller than the rest of the document
+\begin{enumerate}[label=\textbf{\arabic*}, labelsep=0.1em, itemsep=0em, topsep=0em, font=\small]
+    \item Automate customer feedback interpretation from collected surveys.
+    \item Assessing the emotional intensity of messages without context.
+    \item Mining general public opinion on a specific topic from public forums such as Reddit.
+    \item Score attempts at persuading individuals after targeted advertising.
+\end{enumerate}
+
+\vspace{5pt}
+
+\begin{large}
+    \noindent\textbf{Deliverable 2: Text Summarizer}
+\end{large}
+
+Next, we will build on the XLNet framework to produce a generalized text summarizer.
+This will include a score report that shows how well the model performs according to the Pyramid and ROUGE schemes.
+
+\vspace{1pt}
+
+\noindent\textbf{Use Cases:}
+
+\vspace{0pt}
+
+\begin{enumerate}[label=\textbf{\arabic*}, labelsep=0.1em, itemsep=0em, topsep=0em, font=\small]
+    \item Create a highlights reel of current news articles.
+    \item Automatically summarize chapters from a book.
+    \item Distill user messages for chatbots to understand more easily.
+    \item Extract key information from a medical patient’s electronic health records.
+\end{enumerate}
