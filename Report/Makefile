@@ -1,16 +1,16 @@
 TEXSRC = $(wildcard ./*.tex)
 
-proposal: proposal.pdf
+report: report.pdf
 
-all: proposal.pdf
+all: report.pdf
 
-pdf: proposal.pdf
+pdf: report.pdf
 
-proposal.pdf: biblio.bib $(TEXSRC)
-	pdflatex proposal
-	bibtex proposal
-	pdflatex proposal
-	pdflatex proposal
+report.pdf: biblio.bib $(TEXSRC)
+	pdflatex report
+	bibtex report
+	pdflatex report
+	pdflatex report
 
 clean: 
 	\rm -f *.dvi *.aux *.ps *~ *.log *.blg *.bbl *.fls *.fdb_latexmk *.synctex.gz *.out
