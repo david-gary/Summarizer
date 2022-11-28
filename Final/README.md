@@ -2,7 +2,7 @@
 
 ## Project Description
 
-The first stage of this project provides simple sentiment analysis of given texts using the `transformers` library. A variety of dataset loading scripts have been implemented, which can be used to supply sample text input for the analyzer to score. A frontend has been implemented to allow users to input text of their own, or to select details for the sample input they wish to use.
+In this project, we have created a simple tool to perform text sentiment analysis and summarization. Our primary goal is to simplify the interaction process for text summarization so that it can be easily seen that the metrics used for state of the art evaluation are perform poorly and as a result, so do the models.
 
 ## Installation Requirements and Setup
 
