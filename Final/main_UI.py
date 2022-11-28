@@ -1,13 +1,13 @@
 from utils import grab_random_xsum, grab_random_cnndm, grab_random_gigaword,\
     grab_random_reddit, grab_random_s2orc, grab_random_multinews
-from analyzer import SummarizationSuite
+from analyzer import SummarizationSuite, SentimentAnalyzer
 from scorer import ScoringSuite
 import streamlit as st
 
 
 def main():
 
-    st.title("Summarization Tool")
+    st.title("Text Analysis Tool")
 
     # dropdown side menu for selecting dataset or custom text
     st.sidebar.title("Select Dataset")
@@ -64,14 +64,30 @@ def main():
     min_length = summary_length[0]
     max_length = summary_length[1]
 
+    if st.button("Sentiment"):
+        st.empty()
+        analyzer = SentimentAnalyzer()
+        sa_report = analyzer.predict(text)
+        label, score = sa_report[0]['label'], sa_report[0]['score']
+        snippet = text[:300] if len(text) > 300 else text
+        st.write(f"Snippet: {snippet}")
+        st.write(f"Star Rating: {label}")
+        st.write(f"Score: {score}")
+
     # button to perform summarization and score results
 
-    if st.button("Summarize"):
+    if st.button("Summary"):
+
+        # wipe the screen of all previous results
+        st.empty()
 
         summarizer = SummarizationSuite(model_type, max_length, min_length)
         summarizer.build_text_records()
         summarizer.build_model()
         summarizer.build_tokenizer()
+
+        # Save the model if it's not already saved
+        summarizer.save_model()
 
         # sidebar text box for displaying the model description
         st.sidebar.text_area("Model Description", summarizer.description)
@@ -86,10 +102,10 @@ def main():
         # Show full text length in number of words
         st.write(f"Length: {len(text.split())} words")
 
-        st.header("Summaries")
+        st.header("Summary")
 
         summary = summarizer.summarization(text)
-        st.write(f" Summary: {summary}")
+        st.write(f"{summary}")
 
         # full score report
         st.header("Score Report")

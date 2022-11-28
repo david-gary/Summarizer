@@ -122,16 +122,3 @@ def grab_random_gigaword(n=1):
                 texts.append(f.read())
 
     return texts
-
-
-def test_all_grabs():
-    print("Grabbing random Multi-News...")
-    print(grab_random_multinews())
-    print("Grabbing random Reddit...")
-    print(grab_random_reddit())
-    print("Grabbing random S2ORC...")
-    print(grab_random_s2orc())
-
-
-if __name__ == "__main__":
-    test_all_grabs()

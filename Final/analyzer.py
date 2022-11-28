@@ -3,12 +3,14 @@ import pandas as pd
 
 
 class SentimentAnalyzer:
-    def __init__(self, tokenizer=None, model=None, device=None):
-        self.tokenizer = tokenizer
-        self.model = model or pipeline(
-            'sentiment-analysis', model='cardiffnlp/twitter-roberta-base-sentiment', tokenizer='cardiffnlp/twitter-roberta-base-sentiment')
+    def __init__(self, max_input_size=1024):
+        self.model = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment',
+                              tokenizer='nlptown/bert-base-multilingual-uncased-sentiment', max_length=max_input_size)
+        self.max_input_size = max_input_size
 
     def predict(self, text):
+        if len(text) > self.max_input_size:
+            text = text[:self.max_input_size]
         return self.model(text)
 
 
@@ -103,6 +105,21 @@ class SummarizationSuite:
         Builds the proper tokenizer for the summarization suite.
         """
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+
+    def save_model(self):
+        """
+        Saves the model to the `models` folder.
+        """
+        # check if there is already a saved model of the same type
+        # if there is, delete it
+        self.model.save_pretrained('models/saved/{}'.format(self.model_type))
+
+    def load_model(self):
+        """
+        Loads the model from the `models` folder.
+        """
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(
+            'models/saved/{}'.format(self.model_type))
 
     def summarization(self, input_text=None):
         """

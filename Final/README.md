@@ -21,10 +21,18 @@ Dataset arguments:
 - `reddit`: Reddit TIFU dataset
 - `multinews`: Multi-News dataset
 - `s2orc`: S2ORC dataset **WARNING:** this dataset is very large (516GiB) and will take a long time to download
-- `all`: Downloads all three datasets
+- `cnndm`: CNN/Daily Mail dataset
+- `xsum`: XSum dataset
+- `gigaword`: Gigaword dataset
 
 ```bash
 python3 datasets_loader.py --dataset <dataset_name>
+```
+
+### Example
+
+```bash
+python3 datasets_loader.py --dataset cnndm
 ```
 
 ## Erasing all Datasets
@@ -35,14 +43,25 @@ If you would like to clear out all dataset subdirectories, run the following com
 ./reset_datasets.sh
 ```
 
-## Sentiment Analysis Interface
+## Text Analysis Interface
 
-The core part of this first deliverable is the streamlit frontend for sentiment analysis. To start the frontend, run the following command:
+The entire program is packed into a single interface for the user. Once the datasets have been loaded, the user can simply run the command below to start the interface.
 
 ```bash
-streamlit run streamlitUI.py
+streamlit run main_UI.py
 ```
 
-This will display an address in the terminal which can be followed to the frontend display in the browser. The menu on the left allows the user to select the source of the text they would like to analyze (`Custom Text`, `Multi-News`, `Reddit`, or `S2ORC`). Note that if the user selects a datasource that has not been loaded yet, a series of errors will display in the text box at the center of the screen.
+This will display an address in the terminal which can be followed to the frontend display in the browser. The left side of the screen contains a set of customizations the user can make to change the source dataset, model used for summarization, output summary length range, and a description of the model used. The main area of the screen contains two buttons, one for sentiment analysis and one for summary generation.
 
-Once the user has correctly selected or provided a text source, they simply click the `Analyze` button to see the sentiment analysis results. The results will display below the text box at the center of the screen.
+The sentiment analysis button will run the `bert-base-uncased` model on the input text and display the sentiment score. The summary generation button will run whichever model has been selected, but the score report shown at the end will stay the same. This score report contains a series of metrics that are considered the standard for summarization evaluation. The metrics are:
+
+- ROUGE-1 (Precision, Recall, F1)
+- ROUGE-2 (Precision, Recall, F1)
+- ROUGE-L (Precision, Recall, F1)
+- BLEU-1
+- BLEU-2
+- BLEU-3
+- BLEU-4
+- Jaccard Similarity
+- Perplexity
+- Cosine Similarity
