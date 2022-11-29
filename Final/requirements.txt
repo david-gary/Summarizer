@@ -1,6 +1,10 @@
+numpy
+pandas
+scikit-learn
 datasets
 tqdm
 click
 streamlit
 transformers
 sentencepiece
+rouge-score
