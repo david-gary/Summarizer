@@ -13,25 +13,26 @@ def clean_columns(file_path):
                    'rougeL_precision': 'ROUGE-L Precision', 'rougeL_recall': 'ROUGE-L Recall', 'bleu1': 'BLEU-1', 'bleu2': 'BLEU-2', 'bleu3': 'BLEU-3', 'bleu4': 'BLEU-4', 'jaccard': 'Jaccard', 'perplexity': 'Perplexity', 'cosine_similarity': 'Cosine Similarity'})
     return df
 
+
 # Heatmap of all models' scores on all datasets
-
-
 def heatmap_plots(file_path):
     """
     Generates a heatmap of the scores from the summarizations.
     - file_path: the path to the csv file containing the scores.
-    - output files are stored in the `plots` directory with a name that
+    - output files are stored in the `figures` directory with a name that
       indicates the model and plot type.
     """
 
     df = clean_columns(file_path)
+    # drop the dataset column
+    df = df.drop(columns=['dataset'])
     # Generate a heatmap of the scores.
     corr = df.corr()
     sns.heatmap(corr, xticklabels=corr.columns,
                 yticklabels=corr.columns, annot=True)
     plt.title('Correlation Heatmap')
     model_type = file_path.split("/")[-1].split("_")[0]
-    plt.savefig(f'plots/{model_type}_heatmap.png')
+    plt.savefig(f'figures/{model_type}_heatmap.png')
     plt.clf()
 
 
@@ -40,7 +41,7 @@ def dataset_model_relation_plot(file_path):
     """
     Generates a plot of the average score of each model on each dataset.
     - file_path: the path to the csv file containing the scores.
-    - output files are stored in the `plots` directory with a name that
+    - output files are stored in the `figures` directory with a name that
       indicates the model and plot type.
     """
 
@@ -53,7 +54,7 @@ def dataset_model_relation_plot(file_path):
     sns.barplot(data=df)
     model_type = file_path.split("/")[-1].split("_")[0]
     plt.title(f"Average Score of {model_type} on Each Dataset")
-    plt.savefig(f'plots/{model_type}_dataset_model_relation.png')
+    plt.savefig(f'figures/{model_type}_dataset_model_relation.png')
     plt.clf()
 
 
@@ -62,7 +63,7 @@ def clustermap_plots(file_path):
     """
     Generates a clustermap of the scores from the summarizations.
     - file_path: the path to the csv file containing the scores.
-    - output files are stored in the `plots` directory with a name that
+    - output files are stored in the `figures` directory with a name that
       indicates the model and plot type.
     """
 
@@ -71,8 +72,14 @@ def clustermap_plots(file_path):
     sns.clustermap(df.corr(), annot=True)
     plt.title('Correlation Clustermap')
     model_type = file_path.split("/")[-1].split("_")[0]
-    plt.savefig(f'plots/{model_type}_clustermap.png')
+    plt.savefig(f'figures/{model_type}_clustermap.png')
     plt.clf()
+
+
+def single_plot_set(file_path):
+    heatmap_plots(file_path)
+    dataset_model_relation_plot(file_path)
+    clustermap_plots(file_path)
 
 
 def generate_all_plots():
@@ -82,13 +89,16 @@ def generate_all_plots():
     csv_files = [file for file in files if file.endswith('.csv')]
     for file in csv_files:
         file_path = f'results/{file}'
-        heatmap_plots(file_path)
-        dataset_model_relation_plot(file_path)
-        clustermap_plots(file_path)
+        single_plot_set(file_path)
 
 
 def main():
-    generate_all_plots()
+    # use sys command line arguments to determine which plots to generate
+    if len(sys.argv) == 1:
+        generate_all_plots()
+    elif len(sys.argv) == 2:
+        file_path = sys.argv[1]
+        single_plot_set(file_path)
 
 
 if __name__ == '__main__':

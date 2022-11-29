@@ -30,12 +30,13 @@ def generate_dataframes():
     """
 
     MODEL_TYPES = ['bart', 'bartx', 't5', 'pegasus', 'pegasusx']
-    DATASETS = ['XSum', 'CNN/DM', 'Gigaword', 'Reddit', 'S2ORC', 'Multi-News']
+    DATASETS = ['XSum', 'CNN/DM', 'Gigaword', 'Reddit', 'Multi-News']
+    base_df = pd.DataFrame(columns=['dataset', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
+                                    'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])
 
     for model_type in MODEL_TYPES:
         # Create a dataframe to store the scores and summarizations from each model.
-        df = pd.DataFrame(columns=['dataset', 'input_text', 'summary', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
-                          'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])
+        score_df = base_df.copy()
 
         summarizer = SummarizationSuite(model_type)
         summarizer.build_text_records()
@@ -43,7 +44,7 @@ def generate_dataframes():
         summarizer.build_tokenizer()
 
         for dataset in DATASETS:
-            for i in range(50):
+            for i in range(2):
                 if dataset == "XSum":
                     text = grab_random_xsum()[0]
                 elif dataset == "CNN/DM":
@@ -52,8 +53,6 @@ def generate_dataframes():
                     text = grab_random_gigaword()[0]
                 elif dataset == "Reddit":
                     text = grab_random_reddit()[0]
-                elif dataset == "S2ORC":
-                    text = grab_random_s2orc()[0]
                 elif dataset == "Multi-News":
                     text = grab_random_multinews()[0]
 
@@ -80,15 +79,18 @@ def generate_dataframes():
                 perplexity = full_score_dictionary['Perplexity Score']['perplexity']
                 cosine_similarity = full_score_dictionary['Cosine Score']['cosine']
 
-                # add all values to the dataframe in their respective columns
-                df = pd.concat([df, pd.DataFrame([[dataset, text, summary, rouge1_fmeasure, rouge1_precision, rouge1_recall, rouge2_fmeasure, rouge2_precision,
-                                                   rouge2_recall, rougeL_fmeasure, rougeL_precision, rougeL_recall, bleu1, bleu2, bleu3, bleu4, jaccard, perplexity, cosine_similarity]], columns=['dataset', 'input_text', 'summary', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
-                                                                                                                                                                                                   'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])])
+                # create the row to add to the dataframe
+                row = {'dataset': dataset, 'rouge1_fmeasure': rouge1_fmeasure, 'rouge1_precision': rouge1_precision, 'rouge1_recall': rouge1_recall, 'rouge2_fmeasure': rouge2_fmeasure, 'rouge2_precision': rouge2_precision,
+                       'rouge2_recall': rouge2_recall, 'rougeL_fmeasure': rougeL_fmeasure, 'rougeL_precision': rougeL_precision, 'rougeL_recall': rougeL_recall, 'bleu1': bleu1, 'bleu2': bleu2, 'bleu3': bleu3, 'bleu4': bleu4, 'jaccard': jaccard, 'perplexity': perplexity, 'cosine_similarity': cosine_similarity}
+
+                # add the row to the dataframe
+                score_df = pd.concat([score_df, pd.DataFrame([row])])
 
                 print(
                     f"Adding row {i} to dataframe for {model_type} on {dataset} dataset.")
 
-        df.to_csv(f'./results/{model_type}_scores.csv', index=False)
+        score_df.to_csv(f'./results/{model_type}_scores.csv', index=False)
+        print(f"Saved to {model_type}_scores.csv in the results folder.")
 
 
 def test():

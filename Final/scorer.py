@@ -30,6 +30,8 @@ class ScoringSuite:
         Returns:
             A dictionary containing the ROUGE-N and ROUGE-L scores.
         """
+        if len(text) == 0 or len(summary) == 0:
+            return {'rouge1': "Null", 'rouge2': "Null", 'rougeL': "Null"}
         scorer = rouge_scorer.RougeScorer(
             ['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
 
@@ -67,6 +69,8 @@ class ScoringSuite:
         Returns:
             A dictionary containing the BLEU-N score.
         """
+        if len(text) == 0 or len(summary) == 0:
+            return {'bleu1': "Null", 'bleu2': "Null", 'bleu3': "Null", 'bleu4': "Null"}
 
         bleu1 = sentence_bleu(
             [text], summary, weights=(1, 0, 0, 0), smoothing_function=SmoothingFunction().method1)
@@ -94,6 +98,8 @@ class ScoringSuite:
         Returns:
             A dictionary containing the Jaccard score.
         """
+        if len(text) == 0 or len(summary) == 0:
+            return {'jaccard': "Null"}
         text = set(text.split())
         summary = set(summary.split())
 
@@ -114,6 +120,8 @@ class ScoringSuite:
         Returns:
             A dictionary containing the Perplexity score.
         """
+        if len(text) == 0 or len(summary) == 0:
+            return {'perplexity': "Null"}
 
         perplexity = np.exp(
             len(text.split()) / len(summary.split())) if len(summary.split()) > 0 else 0
@@ -135,6 +143,8 @@ class ScoringSuite:
         Returns:
             A dictionary containing the Cosine score.
         """
+        if len(text) == 0 or len(summary) == 0:
+            return {'cosine': "Null"}
 
         text = text.split()
         summary = summary.split()
