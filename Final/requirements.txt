@@ -1,5 +1,6 @@
 numpy
 pandas
+bert-extractive-summarizer
 scikit-learn
 datasets
 tqdm
