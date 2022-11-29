@@ -74,8 +74,6 @@ def main():
         st.write(f"Star Rating: {label}")
         st.write(f"Score: {score}")
 
-    # button to perform summarization and score results
-
     if st.button("Summary"):
 
         # wipe the screen of all previous results
