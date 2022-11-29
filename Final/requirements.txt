@@ -8,4 +8,6 @@ click
 streamlit
 transformers
 sentencepiece
+matplotlib.pyplot
+seaborn
 rouge-score

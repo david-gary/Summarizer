@@ -34,7 +34,7 @@ def generate_dataframes():
 
     for model_type in MODEL_TYPES:
         # Create a dataframe to store the scores and summarizations from each model.
-        df = pd.DataFrame(columns=['input_text', 'summary', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
+        df = pd.DataFrame(columns=['dataset', 'input_text', 'summary', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
                           'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])
 
         summarizer = SummarizationSuite(model_type)
@@ -81,8 +81,9 @@ def generate_dataframes():
                 cosine_similarity = full_score_dictionary['Cosine Score']['cosine']
 
                 # add all values to the dataframe in their respective columns
-                df = df.append({'input_text': text, 'summary': summary, 'rouge1_fmeasure': rouge1_fmeasure, 'rouge1_precision': rouge1_precision, 'rouge1_recall': rouge1_recall, 'rouge2_fmeasure': rouge2_fmeasure, 'rouge2_precision': rouge2_precision, 'rouge2_recall': rouge2_recall,
-                               'rougeL_fmeasure': rougeL_fmeasure, 'rougeL_precision': rougeL_precision, 'rougeL_recall': rougeL_recall, 'bleu1': bleu1, 'bleu2': bleu2, 'bleu3': bleu3, 'bleu4': bleu4, 'jaccard': jaccard, 'perplexity': perplexity, 'cosine_similarity': cosine_similarity}, ignore_index=True)
+                df = pd.concat([df, pd.DataFrame([[dataset, text, summary, rouge1_fmeasure, rouge1_precision, rouge1_recall, rouge2_fmeasure, rouge2_precision,
+                                                   rouge2_recall, rougeL_fmeasure, rougeL_precision, rougeL_recall, bleu1, bleu2, bleu3, bleu4, jaccard, perplexity, cosine_similarity]], columns=['dataset', 'input_text', 'summary', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
+                                                                                                                                                                                                   'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])])
 
                 print(
                     f"Adding row {i} to dataframe for {model_type} on {dataset} dataset.")
