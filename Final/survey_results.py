@@ -1,8 +1,11 @@
 from analyzer import SummarizationSuite
 from scorer import ScoringSuite
 from utils import grab_random_xsum, grab_random_cnndm, grab_random_gigaword,\
-    grab_random_reddit, grab_random_s2orc, grab_random_multinews
+    grab_random_reddit, grab_random_multinews
+import matplotlib.pyplot as plt
+import os
 import pandas as pd
+import seaborn as sns
 
 
 def generate_dataframes():
@@ -30,7 +33,7 @@ def generate_dataframes():
     """
 
     MODEL_TYPES = ['bart', 'bartx', 't5', 'pegasus', 'pegasusx']
-    DATASETS = ['XSum', 'CNN/DM', 'Gigaword', 'Reddit', 'Multi-News']
+    DATASETS = ['XSum', 'CNNDM', 'Gigaword', 'Reddit', 'Multi-News']
     base_df = pd.DataFrame(columns=['dataset', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
                                     'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])
 
@@ -44,10 +47,10 @@ def generate_dataframes():
         summarizer.build_tokenizer()
 
         for dataset in DATASETS:
-            for i in range(2):
+            for i in range(60):
                 if dataset == "XSum":
                     text = grab_random_xsum()[0]
-                elif dataset == "CNN/DM":
+                elif dataset == "CNNDM":
                     text = grab_random_cnndm()[0]
                 elif dataset == "Gigaword":
                     text = grab_random_gigaword()[0]
@@ -91,6 +94,90 @@ def generate_dataframes():
 
         score_df.to_csv(f'./results/{model_type}_scores.csv', index=False)
         print(f"Saved to {model_type}_scores.csv in the results folder.")
+
+
+MODEL_TYPES = ['bart', 'bartx', 't5', 'pegasus', 'pegasusx']
+DATASETS = ['XSum', 'CNNDM', 'Gigaword', 'Reddit', 'Multi-News']
+
+
+def grab_model_csvs():
+    """
+    Grabs all the csv files from the results/model_results directory.
+    """
+
+    csv_files = os.listdir('results/model_results')
+    csv_files = [file for file in csv_files if file.endswith('.csv')]
+    return csv_files
+
+
+def grab_dataset_csvs():
+    """
+    Grabs all the csv files from the results/dataset_results directory.
+    """
+
+    csv_files = os.listdir('results/dataset_results')
+    csv_files = [file for file in csv_files if file.endswith('.csv')]
+    return csv_files
+
+
+def create_dataframe_by_dataset(dataset):
+    """
+    Creates a dataframe of model scores for a given dataset.
+    """
+
+    # grab csvs
+    csv_files = grab_model_csvs()
+
+    df = pd.DataFrame(columns=['model', 'rouge1_fmeasure', 'rouge1_precision', 'rouge1_recall', 'rouge2_fmeasure', 'rouge2_precision',
+                               'rouge2_recall', 'rougeL_fmeasure', 'rougeL_precision', 'rougeL_recall', 'bleu1', 'bleu2', 'bleu3', 'bleu4', 'jaccard', 'perplexity', 'cosine_similarity'])
+
+    for csv_file in csv_files:
+        print(f"Opening {csv_file}")
+        model = csv_file.split('_')[0]
+        model_df = pd.read_csv('results/model_results/' + csv_file)
+        model_df = model_df[model_df['dataset'] == dataset]
+        model_df['model'] = model
+        model_df = model_df.drop(columns=['dataset'])
+        df = pd.concat([df, model_df])
+
+    # save dataframe
+    df.to_csv('results/dataset_results/' +
+              dataset + '_scores.csv', index=False)
+
+
+def plot_rouge_scores(dataset_result_path):
+    """
+    Creates a plot with three subplots, one for each rouge score.
+    - dataset_result_path: path to the csv file containing the dataset results
+    """
+
+    # read in csv
+    df = pd.read_csv(dataset_result_path)
+
+    # create figure
+    fig, axes = plt.subplots(1, 3, figsize=(20, 5))
+
+    # plot rouge1
+    sns.barplot(x='model', y='rouge1_fmeasure', data=df, ax=axes[0])
+    axes[0].set_title('ROUGE-1 F-Measure')
+    axes[0].set_xlabel('Model')
+    axes[0].set_ylabel('ROUGE-1 F-Measure')
+
+    # plot rouge2
+    sns.barplot(x='model', y='rouge2_fmeasure', data=df, ax=axes[1])
+    axes[1].set_title('ROUGE-2 F-Measure')
+    axes[1].set_xlabel('Model')
+    axes[1].set_ylabel('ROUGE-2 F-Measure')
+
+    # plot rougeL
+    sns.barplot(x='model', y='rougeL_fmeasure', data=df, ax=axes[2])
+    axes[2].set_title('ROUGE-L F-Measure')
+    axes[2].set_xlabel('Model')
+    axes[2].set_ylabel('ROUGE-L F-Measure')
+
+    # save figure
+    plt.savefig(dataset_result_path.split('.')[0] + '_rouge_scores.png')
+    plt.close()
 
 
 def test():
