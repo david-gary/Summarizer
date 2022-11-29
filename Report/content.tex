@@ -43,9 +43,9 @@
     \begin{center}
         \begin{tabular}{|lc|}
             \hline
-            \href{https://github.com/zihangdai/xlnet}{XLNet Model} & \href{https://huggingface.co/t5-base}{T5 Model} \\ \hline
-            \href{https://huggingface.co/facebook/bart-large-cnn}{BART Model} &  \href{https://huggingface.co/facebook/bart-large-xsum}{BART-X Model} \\ \hline
-            \href{https://huggingface.co/google/pegasus-large}{Pegasus Model} &  \href{https://huggingface.co/google/pegasus-xsum}{Pegasus-X Model} \\ \hline
+            \href{https://github.com/zihangdai/xlnet}{XLNet Model\cite{XLNet}} & \href{https://huggingface.co/t5-base}{T5 Model\cite{T5}} \\ \hline
+            \href{https://huggingface.co/facebook/bart-large-cnn}{BART Model\cite{BART}} &  \href{https://huggingface.co/facebook/bart-large-xsum}{BART-X Model\cite{BART}} \\ \hline
+            \href{https://huggingface.co/google/pegasus-large}{Pegasus Model\cite{Pegasus}} &  \href{https://huggingface.co/google/pegasus-xsum}{Pegasus-X Model\cite{PegasusX}} \\ \hline
         \end{tabular}
     \end{center}
 
@@ -59,9 +59,9 @@
     \begin{center}
         \begin{tabular}{|c|}
             \hline
-            \href{https://paperswithcode.com/dataset/reddit-tifu}{Reddit TIFU Dataset} \\ \hline
-            \href{https://paperswithcode.com/dataset/multi-news}{Multi-News Dataset} \\ \hline
-            \href{https://paperswithcode.com/dataset/s2orc}{S2ORC Dataset} \\ \hline
+            \href{https://paperswithcode.com/dataset/reddit-tifu}{Reddit TIFU Dataset\cite{RedditTIFU}} \\ \hline
+            \href{https://paperswithcode.com/dataset/multi-news}{Multi-News Dataset\cite{Multinews}} \\ \hline
+            \href{https://paperswithcode.com/dataset/s2orc}{S2ORC Dataset\cite{S2ORC}} \\ \hline
         \end{tabular}
     \end{center}
 
@@ -74,9 +74,9 @@
     \begin{center}
         \begin{tabular}{|c|}
             \hline
-            \href{https://huggingface.co/datasets/gigaword}{Gigaword Dataset} \\ \hline
-            \href{https://huggingface.co/datasets/cnn_dailymail}{CNN/DailyMail Dataset} \\ \hline
-            \href{https://huggingface.co/datasets/xsum}{XSum Dataset} \\ \hline
+            \href{https://huggingface.co/datasets/gigaword}{Gigaword Dataset\cite{Gigaword1,Gigaword2}} \\ \hline
+            \href{https://huggingface.co/datasets/cnn_dailymail}{CNN/DailyMail Dataset\cite{CNNDM}} \\ \hline
+            \href{https://huggingface.co/datasets/xsum}{XSum Dataset\cite{XSumDataset}} \\ \hline
         \end{tabular}
     \end{center}
 
@@ -88,62 +88,55 @@
 
 \vspace{5pt}
 
-Transformers allow us to vectorize text and analyze the relationships between words and sentences.
-This technique allows for more powerful and larger language models to be created.
-Accuracy assessments through expert review are often unavailable for highly-contextual text summarization, so standardized evaluation schemes like Pyramid or ROUGE are used.
-A growing body of literature focuses on assessing these metrics' efficacy and limitations.
-Our goal is to review the literature and summarize the findings of these studies.
-In addition, we aim to apply the XLNet transformer model to various datasets from distinct contexts and thoroughly review the cost and limitations of generalizable text summarization.
+With the increase in the availability of data in many fields, the need for summarizing texts has become increasingly important.
+Condensing large amounts of information into concise and consumable bits of information can have significant personal and business implications.
+For example, helping readers parse through complex topics by reducing the information to its salient points can help individuals quickly apply new information and gain expertise.
+Similarly, businesses have begun to use social media posts to gauge public sentiment toward cryptocurrencies in order to hedge their portfolios\cite{Crypto1, Crypto2}.
+Wading through this enormous amount of information would not be possible without the ability to summarize posts and accurately gauge sentiment.
 
-\vspace{2pt}
+\vspace{5pt}
 
-Our proposed deliverables and the subsequent system will perform text analysis and summarization, following the current standards of generalizability.
-Anyone can use this system to summarize or assess the tone of text input.
-Since the point here is to show the limitations of generalized text summarization models, perfect accuracy is not the goal of our system.
-Users should beware of this and, as a result, only utilize this tool for interpretation guidance.
+Artificial intelligence, and specifically Intelligent Systems (IS) using natural language processing (NLP), is increasingly used in order to accomplish this task. As progress continues to be made in developing and fine-tuning NLP applications for text summarization, there has become an increasing number of models available from which to choose.
+These models are often created in order to accomplish a specific objective and are not intended to be highly effective in every scenario. Hence, when measuring the efficacy of different models, one may arrive at different conclusions.
+While this does certainly not mean that one model is necessarily better than another, it is essential to understand what leads to these different outcomes.
+Levels of efficacy when applied in different scenarios. 
+
+\vspace{5pt}
+
+When intelligent systems summarize text, they may arrive at different conclusions based on the model they implement.
+For example, two methods of scoring are ROUGE\cite{Rouge} and Pyramid\cite{Pyramid}.
+These two scoring systems produce different evaluations of the intelligent system.
+In order to continue to make progress in this field, it is crucial to investigate what causes these evaluations to be different and why.
+
 
 \vspace{5pt}
 
 \begin{large}
-    \noindent\textbf{Deliverable 1: Length-Agnostic Sentiment Analysis}
+    \noindent\textbf{Problem Statement}
 \end{large}
 
-Our first deliverable will have a foundational ability to assess the general sentiment of an input text.
-We will utilize the XLNet transformer model as a backbone and employ some of the length-agnostic methods shown in the Guan, Smetannikov, and Tianxing paper\cite{Transformers}. 
-
-\vspace{1pt}
-
-\noindent\textbf{Use Cases:}
-
-\vspace{0pt}
-
-% enumerate with small text and small spacing
-% text size should be smaller than the rest of the document
-\begin{enumerate}[label=\textbf{\arabic*}, labelsep=0.1em, itemsep=0em, topsep=0em, font=\small]
-    \item Automate customer feedback interpretation from collected surveys.
-    \item Assessing the emotional intensity of messages without context.
-    \item Mining general public opinion on a specific topic from public forums such as Reddit.
-    \item Score attempts at persuading individuals after targeted advertising.
-\end{enumerate}
+Our system implements text analysis and summarization following the current standards of generalizability.
+We make our platform available so that anyone can use it to summarize text or assess the tone of text either using several publicly available datasets implemented by our system or by the user loading a different dataset of their choice.
+However, since the primary purpose of this project is to show the limitations of generalized text summarization models, the user should be aware that we do not strive to achieve perfect accuracy in summarization or sentiment analysis.
+Instead, we highlight the differences of the models implemented, and therefore the majority of the remaining analysis and discussion will focus on these differences. 
 
 \vspace{5pt}
 
 \begin{large}
-    \noindent\textbf{Deliverable 2: Text Summarizer}
+    \noindent\textbf{Literature Survey}
 \end{large}
 
 Next, we will build on the XLNet framework to produce a generalized text summarizer.
 This will include a score report that shows how well the model performs according to the Pyramid and ROUGE schemes.
 
-\vspace{1pt}
+\vspace{5pt}
 
-\noindent\textbf{Use Cases:}
+\begin{large}
+    \noindent\textbf{Our System}
+\end{large}
 
-\vspace{0pt}
+\vspace{5pt}
 
-\begin{enumerate}[label=\textbf{\arabic*}, labelsep=0.1em, itemsep=0em, topsep=0em, font=\small]
-    \item Create a highlights reel of current news articles.
-    \item Automatically summarize chapters from a book.
-    \item Distill user messages for chatbots to understand more easily.
-    \item Extract key information from a medical patient’s electronic health records.
-\end{enumerate}
+Something here.
+
+\pagebreak
