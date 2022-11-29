@@ -87,7 +87,7 @@ def main():
         summarizer.build_tokenizer()
 
         # Save the model if it's not already saved
-        summarizer.save_model()
+        # summarizer.save_model()
 
         # sidebar text box for displaying the model description
         st.sidebar.text_area("Model Description", summarizer.description)

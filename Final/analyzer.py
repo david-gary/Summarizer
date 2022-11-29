@@ -1,4 +1,5 @@
 from transformers import pipeline, AutoTokenizer, AutoModelForSeq2SeqLM, AutoConfig
+from summarizer import TransformerSummarizer
 import pandas as pd
 
 
@@ -45,8 +46,11 @@ class SummarizationSuite:
         """
         Loads and sets the model configuration using AutoModelForSeq2SeqLM and AutoConfig from the transformers library.
         """
-        # should directly load from the model hub
-        self.config = AutoConfig.from_pretrained(self.model_name)
+        if self.model_type == 'xlnet':
+            pass
+        else:
+            # should directly load from the model hub
+            self.config = AutoConfig.from_pretrained(self.model_name)
 
     def set_description(self):
         """
@@ -93,18 +97,21 @@ class SummarizationSuite:
         self.set_config()
         self.set_description()
 
-        # Load the model from the HuggingFace model hub using AutoModelForSeq2SeqLM
-        # requires credentials to be set up
-
-        new_model = AutoModelForSeq2SeqLM.from_pretrained(
-            self.model_name, config=self.config)
-        self.model = new_model
+        if self.model_type == 'xlnet':
+            self.model = TransformerSummarizer(
+                transformer_type="XLNet", transformer_model_key="xlnet-base-cased")
+        else:
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(
+                self.model_name, config=self.config)
 
     def build_tokenizer(self):
         """
         Builds the proper tokenizer for the summarization suite.
         """
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        if self.model_type == 'xlnet':
+            pass
+        else:
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
     def save_model(self):
         """
@@ -126,10 +133,16 @@ class SummarizationSuite:
         Generates a new summarization using the model already loaded.
         """
 
-        input_ids = self.tokenizer.encode(
-            input_text, return_tensors='pt', max_length=self.max_length)
-        summary_ids = self.model.generate(
-            input_ids, num_beams=4, max_length=self.max_length, min_length=self.min_length, early_stopping=True)
-        output = self.tokenizer.decode(
-            summary_ids[0], skip_special_tokens=True)
-        return output
+        if input_text is None:
+            return "No input text provided."
+
+        if self.model_type == 'xlnet':
+            return self.model(input_text, min_length=self.min_length, max_length=self.max_length)
+        else:
+            input_ids = self.tokenizer.encode(
+                input_text, return_tensors='pt', max_length=self.max_length)
+            summary_ids = self.model.generate(
+                input_ids, num_beams=4, max_length=self.max_length, min_length=self.min_length, early_stopping=True)
+            summary = self.tokenizer.decode(
+                summary_ids[0], skip_special_tokens=True)
+            return summary

@@ -1,2 +1,3 @@
 XLNet is a model proposed by Zhilin Yang, Zihang Dai, Yiming Yang, Jaime Carbonell, Ruslan Salakhutdinov, and Quoc V. Le.
 It learns bidirectional contexts by analyzing the likelihood of an input sequence factorization order permutation.
+This acts as an improvement on the BERT model by allowing for greater permutation language modeling.
