@@ -1,10 +1,8 @@
 TEXSRC = $(wildcard ./*.tex)
 
+all: report clean
+
 report: report.pdf
-
-all: report.pdf
-
-pdf: report.pdf
 
 report.pdf: biblio.bib $(TEXSRC)
 	pdflatex report
