@@ -104,8 +104,6 @@ def main():
 
         # full score report
         st.header("Score Report")
-        st.write(
-            "A rouge precision score of 1 indicates the model cannot reference example summaries.")
         scoring_suite = ScoringSuite(text, summary)
         st.write(scoring_suite.full_score_report())
 
