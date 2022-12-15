@@ -155,7 +155,7 @@ def main():
         load_reddit_tifu()
         load_s2orc()
     else:
-        print("Invalid dataset name. Please choose from\n- multinews\n- reddit, s2orc\n- \n- xsum\n- cnndm\n- gigaword\ne.g. python3 datasets_loader.py --dataset multinews")
+        print("Invalid dataset name. Please choose from\n- multinews\n- reddit\n-  s2orc\n- \n- xsum\n- cnndm\n- gigaword\ne.g. python3 datasets_loader.py --dataset multinews")
 
 
 if __name__ == '__main__':
